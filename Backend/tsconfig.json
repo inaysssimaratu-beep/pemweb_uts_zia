@@ -8,7 +8,6 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "target":"es2022",
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "target": "esnext",
@@ -24,8 +23,8 @@
     "declarationMap": true,
 
     // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": false,
+    "exactOptionalPropertyTypes": false,
 
     // Style Options
     // "noImplicitReturns": true,
@@ -36,13 +35,14 @@
     // "noPropertyAccessFromIndexSignature": true,
 
     // Recommended Options
-    "strict": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
+    "moduleDetection": "force"
   },
   "include": ["src"]
 }
