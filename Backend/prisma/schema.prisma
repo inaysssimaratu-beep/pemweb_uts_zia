@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "darwin-arm64"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  name        String
+  categoryId  Int      @map("category_id") // Diubah dari String ke Int agar cocok dengan Category.id
+  location    String
+  dateEvent   DateTime @map("date_event")
+  description String   @db.Text
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relasi resmi ke model Category
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@map("events") // Tambahan opsi agar nama tabel di database jadi "events" (plural)
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Menandakan bahwa satu kategori bisa punya banyak Event
+  events    Event[]
+
+  @@map("categories")
+}
+
+model Pembicara { // Diubah jadi "Pembicara" (Kapital) agar konsisten dengan model lain
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  image     String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("pembicara") // Nama tabel di database asli tetap menggunakan huruf kecil "pembicara"
+}
+
+// Tambahan Model User untuk Autentikasi Login NIM & Password
+model User {
+  id        Int      @id @default(autoincrement())
+  nim       String   @unique
+  password  String
+  nama      String
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("users")
+}
