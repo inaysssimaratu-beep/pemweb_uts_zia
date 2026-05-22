@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "../../component/ui/Input";
 
@@ -11,6 +12,8 @@ const categorySchema = z.object({
 type CategoryFormData = z.infer<typeof categorySchema>;
 
 export default function CategoryCreate() {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -28,6 +31,9 @@ export default function CategoryCreate() {
 
       alert("Kategori baru berhasil disimpan ke database cloud!");
       reset();
+
+      // balik ke halaman kategori
+      navigate("/dashboard/kategori");
     } catch (error) {
       console.error("Gagal menyimpan kategori:", error);
       alert("Terjadi kesalahan saat menyimpan data kategori.");
